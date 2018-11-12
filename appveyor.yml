@@ -1,4 +1,6 @@
 clone_folder: C:\M
+on_finish:
+  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 
 environment:
     PATH: C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Program Files\Git\cmd
@@ -7,9 +9,13 @@ environment:
     BINTRAY_REPOSITORY: msys2
     PACMAN_REPOSITORY_NAME: ci.mingw
     BUILD_URL: https://ci.appveyor.com/project/$(APPVEYOR_ACCOUNT_NAME)/$(APPVEYOR_PROJECT_NAME)/build/$(APPVEYOR_BUILD_VERSION)
+     appveyor: natasa123
     matrix:
         - MINGW_INSTALLS: mingw32
         - MINGW_INSTALLS: mingw64
+  init:
+  - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+
 
 matrix:
     fast_finish: true
